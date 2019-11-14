@@ -1,0 +1,51 @@
+{
+  "name": "chatbox",
+  "version": "1.0.0",
+  "description": "a realtime chat with socket.io",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon -r dotenv/config src/index.js",
+    "start": "node src/index.js",
+    "test": "mocha"
+  },
+  "keywords": [
+    "socket.io",
+    "express",
+    "chat",
+    "realtime"
+  ],
+  "author": "adedotun bashorun",
+  "license": "ISC",
+  "dependencies": {
+    "africastalking": "^0.4.2",
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "mysql2": "^2.0.0",
+    "nodemailer": "^6.3.1",
+    "nodemailer-sendgrid-transport": "^0.2.0",
+    "passport": "^0.4.0",
+    "passport-facebook": "^3.0.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "pusher": "^3.0.0",
+    "sequelize": "^5.21.2",
+    "sequelize-cli": "^5.5.1",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
+    "mocha": "^6.2.2",
+    "nodemon": "^1.19.4",
+    "request": "^2.88.0",
+    "should": "^13.2.3",
+    "superagent": "^5.1.0",
+    "supertest": "^4.0.2"
+  },
+  "engines": {
+    "node": ">= 8.11.3",
+    "npm": ">= 6.4.0"
+  }
+}
