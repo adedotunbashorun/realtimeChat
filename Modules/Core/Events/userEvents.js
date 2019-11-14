@@ -7,24 +7,25 @@ const SmsService = new Sms();
 
 class userEvents extends EventEmitter {
     
-    constructor(user) {
+    constructor(user, req) {
         super();
         this.user = user;
+        this.req = req
         // Become eaten when gator emits 'gatorEat'
         this.on('onRegister', this.onRegister);
     }
 
     async onRegister(){
 
-        CoreService.Email(user, 'New Registration', CoreService.html('<p style="color: #000">Hello ' + user.first_name + ' ' + user.last_name + ', Thank you for registering at fashionCast.<br> Please click the link below to complete registration https://fashioncastapi.herokuapp.com/api/activate/' + user.temporarytoken + '</p>'));
-
-        SmsService.Sms(user.phone, 'Hello '+ user.first_name+' this is your activation code '+user.phone_code);
-
-        CoreService.activity_log(req, user.id, 'Registered');
-
         let user = this.user;
 
-        Notification.triggerNotification('notifications','users',{user, message: {msg: user.last_name + " Just created a new account."}},req);
+        // CoreService.Email(user, 'New Registration', CoreService.html('<p style="color: #000">Hello ' + user.first_name + ' ' + user.last_name + ', Thank you for registering at fashionCast.<br> Please click the link below to complete registration https://fashioncastapi.herokuapp.com/api/activate/' + user.temporarytoken + '</p>'));
+
+        // SmsService.Sms(user.phone, 'Hello '+ user.first_name+' this is your activation code '+user.phone_code);
+
+        CoreService.activity_log(this.req, user.id, 'Registered');
+
+        Notification.triggerNotification('notifications','users',{user, message: {msg: user.last_name + " Just created a new account."}},this.req);
 
         
     }
@@ -38,21 +39,21 @@ class userEvents extends EventEmitter {
         } else {
             CoreService.Email(user, 'Account Activated', CoreService.html('<p style="color: #000">Hello ' + user.first_name + ' ' + user.last_name + ', Thank you for registering at Refill. Your Account has been activated successfully.'));
         } 
-        CoreService.activity_log(req, user.id, 'Activated Account')
+        CoreService.activity_log(this.req, user.id, 'Activated Account')
     }
 
     async onLogin(){
 
         let user = this.user;
         
-        CoreService.activity_log(req, user.id, 'User logged into account')
+        CoreService.activity_log(this.req, user.id, 'User logged into account')
     }
 
     async onLogout(){
 
         let user = this.user;
         
-        CoreService.activity_log(req, user.id, 'User logged out of account')
+        CoreService.activity_log(this.req, user.id, 'User logged out of account')
     }
 }
 
