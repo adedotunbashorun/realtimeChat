@@ -14,6 +14,10 @@ exports.notification = io => {
         socket.on("disconnect", function(data) {
             socket.broadcast.emit("user_leave", this.username);
         });
+
+        socket.on("new_user", (data) => {
+            socket.broadcast.emit("new_user", data);
+        })
     });
 }
 
