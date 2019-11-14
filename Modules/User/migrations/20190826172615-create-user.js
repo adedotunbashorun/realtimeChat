@@ -14,14 +14,12 @@ module.exports = {
       lastName: {
         type: Sequelize.STRING
       },
-      // stateId: {
-      //   type: Sequelize.UUID,
-      //   references: {
-      //     model: 'States', // name of Source model
-      //     key: 'id',
-      //   },
-      //   foreignKey: true
-      // },
+      facebookId: {
+        type: Sequelize.STRING
+      },
+      googleId: {
+        type: Sequelize.STRING
+      },
       email: {
         type: Sequelize.STRING,
         uniqueKey: true
