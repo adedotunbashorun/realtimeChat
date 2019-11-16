@@ -1,6 +1,6 @@
 const { User,AuthToken } = require('../../User/models');
 const UserEvent  = require('../../Core/Events/userEvents');
-
+const { ErrorHandler } = require('../../../helpers/error');
 
 class AuthenticationService {
 
@@ -11,14 +11,23 @@ class AuthenticationService {
     async register(req){   
 
         const { first_name, last_name, email, phone, password }  = req.body;
-        console.log(req.body)
 
-        const user = await User.create({ first_name: first_name, last_name: last_name, email: email, phone: phone, password: password});
+        if (!email || !password || !first_name || !last_name || !phone) {
+            throw new ErrorHandler(404, 'Missing required fields')
+        }
+
+        try {
+            const user = await User.create({ first_name: first_name, last_name: last_name, email: email, phone: phone, password: password});
         
-        let UserEvents = this.events(user, req);
-        UserEvents.emit('onRegister');
-        
-        return user;
+            let data = await user.authorize();
+            let UserEvents = this.events(user, req);
+            UserEvents.emit('onRegister');
+            
+            return data;
+
+        } catch (error) {
+            throw new ErrorHandler(501, error.message);
+        }
     }
 
     async activate(req) {

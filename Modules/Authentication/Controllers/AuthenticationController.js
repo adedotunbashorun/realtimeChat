@@ -13,10 +13,11 @@ class AuthenticationController {
         try {
             
             let user = await auth.register(req);
-
+            console.log(user)
             return res.status(201).json({ user: user, msg: 'Registration Successful, Please activate your account by visiting your mail.', token: user.temporarytoken });
         } catch (error) {
-            return res.json({ error: error, msg: error.message });
+            console.log(error)
+            next(error);
         }
     }
 

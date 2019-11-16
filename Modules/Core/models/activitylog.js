@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     }
   }, {});
-  ActivityLog.associate = function(models) {
+  ActivityLog.associate = (models) => {
     // associations can be defined here
   };
   return ActivityLog;

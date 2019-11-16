@@ -35,8 +35,9 @@ describe("authentication module", () => {
                 .expect(201)
                 .expect('Content-Type', /json/)
                 .expect(function(response) {
-                    token = response.body.token;
-                    id = response.body.user.id;
+                    token = response.body.data.accessToken;
+                    id = response.body.data.user.id;
+                    console.log(response.body)
                     expect(response.statusCode).to.equal(201);
                     expect(response.body).to.be.an('object');
                     expect(response.body.user).to.exist;
@@ -45,23 +46,22 @@ describe("authentication module", () => {
         });
     });
 
-    describe('Activate User API', function() {
-        it('Should success if user activation is valid', function(done) {
-            console.log(token)
-            server
-                .patch('/api/activate/'+ token)
-                .set('Accept', 'application/json')
-                .set('Content-Type', 'application/json')
-                .expect(201)
-                .expect('Content-Type', /json/)
-                .expect(function(response) {
-                    expect(response.statusCode).to.equal(201);
-                    expect(response.body).to.be.an('object');
-                    expect(response.body.token).to.exist;
-                })
-                .end(done);
-        });
-    });
+    // describe('Activate User API', function() {
+    //     it('Should success if user activation is valid', function(done) {
+    //         server
+    //             .patch('/api/activate/'+ token)
+    //             .set('Accept', 'application/json')
+    //             .set('Content-Type', 'application/json')
+    //             .expect(201)
+    //             .expect('Content-Type', /json/)
+    //             .expect(function(response) {
+    //                 expect(response.statusCode).to.equal(201);
+    //                 expect(response.body).to.be.an('object');
+    //                 expect(response.body.token).to.exist;
+    //             })
+    //             .end(done);
+    //     });
+    // });
 
     // describe('Login API', function() {
     //     it('Should success if credential is valid', function(done) {

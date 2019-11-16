@@ -6,6 +6,7 @@ const { notification } = require('./Modules/Core/Service/Utilities/socket');
 const config = require('./config/index');
 const routes = require('./config/route');
 let sequelize_db = require('./config/db');
+const { handleError, ErrorHandler } = require('./helpers/error');
 
 let app = express();
 
@@ -42,10 +43,20 @@ app.use(express.urlencoded({ limit: config.data.limit, extended: config.data.ext
 app.use(express.static(path.join(__dirname, '/')));
 app.use('/', express.static(path.join(__dirname, '/')));
 
+app.get('/error', (req, res) => {
+    throw new ErrorHandler(500, 'Internal server error');
+})
+
 //routes init
 routes.map( route => {
     app.use('/api', route);
 });
+
+app.use((err, req, res, next) => {
+    handleError(err, res);
+});
+
+
 
 app.set('port',port);
 module.exports = app;
