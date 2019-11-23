@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.ENUM('active', 'inactive'),
             defaultValue: 'inactive'
         }
-    }, {});
+    });
 
     User.associate = (models) => {
         User.hasMany(models.AuthToken);
